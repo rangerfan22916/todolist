@@ -1,64 +1,64 @@
-//Init(Create) an empty array element called tasks
 let tasks = [];
 
-//Add an ON CLICK event listener to the "add task button" that calls a function
-document.getElementById("addTaskButton").addEventListener("click", function () {
-  //get the value of the input box and store it in a variable called taskInput
-  let taskInput = document.getElementById("taskInput").value;
+const taskInput = document.getElementById("taskInput");
+const taskList = document.getElementById("taskList");
+const taskCounter = document.getElementById("taskCounter");
 
-  //Check if taskInput has value or something in it
-  if (taskInput) {
-    tasks.push(taskInput);
+document.getElementById("addTaskButton").addEventListener("click", addTask);
+taskInput.addEventListener("keydown", function (event) {
+  if (event.key === "Enter") addTask();
+});
+document.getElementById("clearTaskBtn").addEventListener("click", clearTasks);
 
-    //clear the input field
-    document.getElementById("taskInput").value = "";
-
-    // call the function to update the task list displayt
+function addTask() {
+  const task = taskInput.value.trim();
+  if (task) {
+    tasks.push({ text: task, completed: false });
+    taskInput.value = "";
     displayTasks();
   }
-});
+}
 
-//function to display tasks in the list
 function displayTasks() {
-  //select the unordered list (tasklist) in the html
-  let taskList = document.getElementById("taskList");
-
-  //clear the existing task list before updating it
   taskList.innerHTML = "";
-
-  //loops through each task in the array and create a list item
-
   tasks.forEach((task, index) => {
-    //create a new <li> element for each task
-    let li = document.createElement("li");
-
-    //Add css classes for styling
+    const li = document.createElement("li");
     li.classList.add(
       "list-group-item",
       "d-flex",
       "justify-content-between",
       "align-items-center"
     );
+    if (task.completed) li.classList.add("completed");
 
-    li.innerHTML = `${task} <button class='btn btn-success btn-sm' onclick='removeTask(${index})'> √ </button>`;
+    li.innerHTML = `${task.text} 
+      <div>
+        <button class='btn btn-success btn-sm' onclick='toggleTask(${index})'>✔</button>
+        <button class='btn btn-danger btn-sm' onclick='removeTask(${index})'>🗑</button>
+      </div>`;
 
-    //append the new tasks to the task list
     taskList.appendChild(li);
   });
+  updateTaskCounter();
 }
 
-//Function to remove a task from thee list when the check button is clicked
+function toggleTask(index) {
+  tasks[index].completed = !tasks[index].completed;
+  displayTasks();
+}
 
 function removeTask(index) {
   tasks.splice(index, 1);
-
   displayTasks();
 }
 
-//Event listener for the "Clear all tasks" button
-document.getElementById("clearTaskBtn").addEventListener("click", function () {
-  //empty thr tasks array to remove all tasks
+function clearTasks() {
   tasks = [];
-  //call the function to update the tasks list display
   displayTasks();
-});
+}
+
+function updateTaskCounter() {
+  taskCounter.textContent = `Total Tasks: ${tasks.length}`;
+}
+
+displayTasks();

@@ -1,0 +1,41 @@
+body {
+    font-family: 'Space Mono', monospace;
+    background-color: #f0f8ff;
+    margin: 0;
+    padding: 0;
+  }
+  
+  h1 {
+    color: #007bff;
+    font-size: 2.5rem;
+  }
+  
+  #taskInput {
+    border: 2px solid #007bff;
+    padding: 0.5rem;
+  }
+  
+  .btn-primary {
+    background-color: #007bff;
+    border: none;
+  }
+  
+  .btn-danger {
+    background-color: #dc3545;
+  }
+  
+  .list-group-item {
+    background-color: #e6f7ff;
+    border: 1px solid #007bff;
+  }
+  
+  .completed {
+    text-decoration: line-through;
+    background-color: #d4edda;
+  }
+  
+  #taskCounter {
+    font-weight: bold;
+    color: #007bff;
+  }
+  
